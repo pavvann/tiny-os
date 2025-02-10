@@ -2,5 +2,12 @@
 name = "tinyos"
 version = "0.1.0"
 edition = "2018"
+authors = ["Pawan Bajaj <pawanbajaj2012@gmail.com>"]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
 
 [dependencies]
