@@ -16,9 +16,18 @@ pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
     tinyos::init();
 
-    // invoking a breakpoint exception
-    x86_64::instructions::interrupts::int3();
+    // triggering a page fault
+    // unsafe {
+    //     *(0xdeadbeef as *mut u8) = 42;
+    // }
 
+    // trying to triple fault
+    fn stack_overflow() {
+        stack_overflow();
+    }
+
+    stack_overflow();
+    
     #[cfg(test)]
     test_main();
 
