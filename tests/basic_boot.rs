@@ -13,6 +13,8 @@ pub extern "C" fn _start() -> ! {
     loop{}
 }
 
+#[allow(dead_code)]
+#[allow(unused_variables)]
 fn test_runner(tests: &[&dyn Fn()]) {
     unimplemented!()
 }

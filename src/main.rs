@@ -14,8 +14,15 @@ mod serial;
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
+    tinyos::init();
+
+    // invoking a breakpoint exception
+    x86_64::instructions::interrupts::int3();
+
     #[cfg(test)]
     test_main();
+
+    println!("it id not crash!");
     loop{}
 }
 

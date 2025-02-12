@@ -112,6 +112,7 @@ impl fmt::Write for Writer {
     }
 }
 
+#[allow(dead_code)]
 pub fn print_something() {
     use core::fmt::Write;
     let mut writer = Writer {

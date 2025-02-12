@@ -3,9 +3,12 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![feature(abi_x86_interrupt)]
+
 
 pub mod serial;
 pub mod vga_buffer;
+pub mod interrupts;
 
 use core::panic::PanicInfo;
 
@@ -54,10 +57,15 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
     }
 }
 
+pub fn init() {
+    interrupts::init_idt();
+}
+
 
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    init();
     test_main();
     loop{}
 }
