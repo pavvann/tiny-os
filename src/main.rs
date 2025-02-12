@@ -22,17 +22,17 @@ pub extern "C" fn _start() -> ! {
     // }
 
     // trying to triple fault
-    fn stack_overflow() {
-        stack_overflow();
-    }
+    // fn stack_overflow() {
+    //     stack_overflow();
+    // }
 
-    stack_overflow();
+    // stack_overflow();
     
     #[cfg(test)]
     test_main();
 
     println!("it id not crash!");
-    loop{}
+    tinyos::hlt_loop();
 }
 
 // existing panic handler
@@ -40,7 +40,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop{}
+    tinyos::hlt_loop();
 }
 
 #[cfg(test)]
