@@ -16,10 +16,24 @@ pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
     tinyos::init();
 
-    // triggering a page fault
-    // unsafe {
-    //     *(0xdeadbeef as *mut u8) = 42;
-    // }
+    use x86_64::registers::control::Cr3;
+
+    let (level_4_page_table, _) = Cr3::read();
+    println!("Level 4 page table is at: {:?}", level_4_page_table);
+
+    let ptr = 0x2031b2 as *mut u8;
+
+    // read from code page
+    unsafe {
+        let x = *ptr;
+    }
+    println!("read worked");
+
+    // write to a code page
+    unsafe {
+        *ptr = 42;
+    }
+    println!("write worked");
 
     // trying to triple fault
     // fn stack_overflow() {

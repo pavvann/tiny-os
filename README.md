@@ -14,7 +14,8 @@
 - Double Faults
 - Hardware Interrupts
 
-
+3. Memory
+- paging
 
 
 
