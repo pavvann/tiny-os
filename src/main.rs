@@ -25,7 +25,7 @@ pub extern "C" fn _start() -> ! {
 
     // read from code page
     unsafe {
-        let x = *ptr;
+        let _x = *ptr;
     }
     println!("read worked");
 
