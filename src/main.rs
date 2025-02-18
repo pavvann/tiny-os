@@ -13,34 +13,22 @@ mod serial;
 
 entry_point!(kernel_main);
 fn kernel_main(boot_info: &'static BootInfo) -> ! {
+    use tinyos::memory::active_level_4_table;
+    use x86_64::VirtAddr;
+
     println!("Hello World{}", "!");
     tinyos::init();
 
-    use x86_64::registers::control::Cr3;
+   let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+   let l4_table = unsafe {
+    active_level_4_table(phys_mem_offset)
+   };
 
-    let (level_4_page_table, _) = Cr3::read();
-    println!("Level 4 page table is at: {:?}", level_4_page_table);
-
-    let ptr = 0x2031b2 as *mut u8;
-
-    // read from code page
-    unsafe {
-        let _x = *ptr;
-    }
-    println!("read worked");
-
-    // write to a code page
-    unsafe {
-        *ptr = 42;
-    }
-    println!("write worked");
-
-    // trying to triple fault
-    // fn stack_overflow() {
-    //     stack_overflow();
-    // }
-
-    // stack_overflow();
+   for (i, entry) in l4_table.iter().enumerate() {
+        if !entry.is_unused() {
+            println!("L4 Entry {}: {:?}", i, entry);
+        }
+   }
     
     #[cfg(test)]
     test_main();

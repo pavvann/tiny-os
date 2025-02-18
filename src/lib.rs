@@ -13,7 +13,6 @@ pub mod memory;
 pub mod gdt;
 use core::panic::PanicInfo;
 
-use bootloader::entry_point;
 
 pub trait Testable {
     fn run (&self) -> ();
