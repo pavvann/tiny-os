@@ -7,12 +7,12 @@
 
 
 use core::panic::PanicInfo;
-
+use bootloader::{entry_point, BootInfo};
 mod vga_buffer;
 mod serial;
 
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
+entry_point!(kernel_main);
+fn kernel_main(boot_info: &'static BootInfo) -> ! {
     println!("Hello World{}", "!");
     tinyos::init();
 
